@@ -1,0 +1,19 @@
+version: '3.3'
+
+services:
+  arangodb:
+    image: sandeepk01/arangodb:${DB_VERSION}-bullseye-slim
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NODE_IMAGE: 16-bullseye-slim
+        DB_PACKAGE: arangodb3_${DB_VERSION}-1_amd64.deb
+        DB_PACKAGE_URL: https://download.arangodb.com/arangodb39/DEBIAN/amd64/arangodb3_${DB_VERSION}-1_amd64.deb
+        DB_SIGNATURE_URL: https://download.arangodb.com/arangodb39/DEBIAN/amd64/arangodb3_${DB_VERSION}-1_amd64.deb.asc
+        SIGNATURE_FILE: arangodb3_${DB_VERSION}-1_amd64.deb.asc
+        PGP_KEY_URL: https://keys.openpgp.org/vks/v1/by-fingerprint/CD8CB0F1E0AD5B52E93F41E7EA93F5E56E751E9B
+    environment:
+      ARANGO_ROOT_PASSWORD: 'testing'
+    ports:
+      - 8900:8529
